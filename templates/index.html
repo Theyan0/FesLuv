@@ -6,6 +6,7 @@
     <title>Welcome Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         html {
@@ -53,6 +54,7 @@
         }
 
         #welcome {
+            font-family: 'Archivo Black';
             font-size: 3rem;
             text-align: center;
             display: flex;
@@ -63,6 +65,7 @@
         #welcome span {
             display: inline-block;
             animation: bounce 1.5s ease-in-out infinite;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         /* Bounce animation */
@@ -97,9 +100,123 @@
             animation-delay: 0.6s;
         }
 
+        @keyframes snow {
+    from {
+        transform: translateY(-10vh);
+    }
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+.snowflake {
+    position: fixed;
+    top: -10vh;
+    font-size: 1.5rem;
+    color: white;
+    animation: snow linear infinite;
+    pointer-events: none;
+}
+
+/* Randomize left position and animation duration */
+.snowflake:nth-child(1) { left: 5%; animation-duration: 8s; }
+.snowflake:nth-child(2) { left: 15%; animation-duration: 12s; }
+.snowflake:nth-child(3) { left: 25%; animation-duration: 9s; }
+.snowflake:nth-child(4) { left: 35%; animation-duration: 10s; }
+.snowflake:nth-child(5) { left: 45%; animation-duration: 11s; }
+.snowflake:nth-child(6) { left: 55%; animation-duration: 14s; }
+.snowflake:nth-child(7) { left: 65%; animation-duration: 8s; }
+.snowflake:nth-child(8) { left: 75%; animation-duration: 13s; }
+.snowflake:nth-child(9) { left: 85%; animation-duration: 9s; }
+.snowflake:nth-child(10) { left: 95%; animation-duration: 10s; }
+
+
+button {
+    background-color: #2f2f2f; /* Dark solid color */
+    color: #ffffff; /* White text */
+    font-size: 1.1rem;
+    padding: 12px 25px;
+    border: 2px solid transparent;
+    border-radius: 5px; /* Subtle rounded corners */
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    outline: none;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background-color: #ffffff; /* White background on hover */
+    color: #2f2f2f; /* Dark text */
+    border: 2px solid #2f2f2f; /* Border for a clean outline */
+    transform: translateY(-3px); /* Lift effect */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    transform: translateY(1px); /* Subtle press effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Navbar Styles */
+/* Navbar Styles */
+nav {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    backdrop-filter: blur(5px); /* Adds a frosted glass effect */
+    text-align: center; /* Center the title */
+}
+
+.logo a {
+    font-size: 2rem;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Archivo Black';
+}
+
+/* Optional Hover Effect */
+.logo a:hover {
+    color: #e4101e; /* Highlight effect on hover */
+    transition: color 0.3s ease;
+}
+
+
+
+
+
     </style>
 </head>
 <body>
+
+    <nav>
+        <div class="logo">
+            <a href="#">FESLUV</a>
+        </div>
+    </nav>
+    
+    
+    <div class="snowflake">❅</div>
+<div class="snowflake">❆</div>
+<div class="snowflake">❄</div>
+<div class="snowflake">❅</div>
+<div class="snowflake">❆</div>
+<div class="snowflake">❄</div>
+<div class="snowflake">❅</div>
+<div class="snowflake">❆</div>
+<div class="snowflake">❄</div>
+<div class="snowflake">❅</div>
+
+
     <div class="bg"></div>
     <div class="bg bg2"></div>
     <div class="bg bg3"></div>
