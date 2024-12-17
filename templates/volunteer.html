@@ -1,19 +1,118 @@
-
-<!-- volunteer.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Volunteer</title>
+    <title>Volunteer Events</title>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        a { text-decoration: none; color: blue; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .image-container {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-padding: 50%;
+            padding: 20px;
+            width: 100vw;
+            box-sizing: border-box;
+        }
+
+        .card {
+            flex: 0 0 500px; /* Fixed width */
+            height: 700px; /* Fixed height */
+            border-radius: 25px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            scroll-snap-align: center;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* Zoom effect */
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .register-btn {
+            display: inline-block;
+            background-color: #00796b;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .register-btn:hover {
+            background-color: #004d40;
+        }
+
+        /* Hide scrollbar for cleaner look */
+        .image-container::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <h1>Volunteer</h1>
-    <p>Welcome to the Volunteer page!</p>
-    <a href="{{ url_for('home') }}">Back to Home</a>
+    <h1>Volunteer Events</h1>
+
+    <div class="image-container">
+        {% for image in images %}
+            <div class="card" onclick="addToMyEvents('{{ image }}')">
+                <img src="{{ url_for('static', filename='images/' + image) }}" alt="Volunteer Event">
+                <div class="register-btn">Add to My Events</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function addToMyEvents(eventName) {
+            fetch('/add-to-events', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ event: eventName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Event added to My Events!');
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An unexpected error occurred.');
+            });
+        }
+    </script>
 </body>
 </html>

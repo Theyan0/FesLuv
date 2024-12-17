@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 import random
 
 app = Flask(__name__)
@@ -16,7 +16,29 @@ ITEMS_LIST = [
     "Book", "Coffee Mug", "Socks", "Candles", "Puzzle", "Pen Set", "Journal", 
     "Keychain", "Plant Pot", "Scarf", "Chocolate Box", "Notebook", "Headphones", 
     "T-Shirt", "Water Bottle", "Fridge Magnets", "Lip Balm", "Hand Cream", 
-    "Stickers", "Bookmark"
+    "Stickers", "Bookmark", "Umbrella", "Photo Frame", "Desk Organizer", 
+    "Wall Art", "Clock", "Phone Stand", "Wireless Mouse", "Keyboard", "Planner", 
+    "Hand Sanitizer", "Reusable Tote Bag", "Wrist Watch", "Mini Fan", "Tumbler", 
+    "Wireless Charger", "Perfume", "Room Diffuser", "Bath Bombs", "Eye Mask", 
+    "Sunglasses", "Reusable Straw Set", "Snack Box", "Laptop Sleeve", "Card Holder", 
+    "Pen Holder", "Sticky Notes", "Cushion Cover", "Yoga Mat", "Watercolor Set", 
+    "Sketchbook", "Desk Lamp", "Mouse Pad", "Laptop Stand", "Stress Ball", 
+    "USB Drive", "Power Bank", "LED String Lights", "Wallet", "Travel Pillow", 
+    "Apron", "Phone Case", "Magnetic Whiteboard", "Chopping Board", "Bottle Opener", 
+    "Measuring Spoons", "Bluetooth Speaker", "Teapot", "Coffee Beans", "Tea Sampler", 
+    "Hair Brush", "Lipstick", "Shaving Kit", "Travel Mug", "Slippers", "Fuzzy Blanket", 
+    "Pencil Sharpener", "Rubik's Cube", "Board Game", "Playing Cards", "Earphones", 
+    "Hand Towels", "Cookbook", "Whisk", "Cutlery Set", "Reusable Food Wrap", 
+    "Notebook Set", "Portable Mirror", "Comfy Socks", "Mini Succulent", 
+    "Portable Blender", "Smartphone Ring Holder", "Plant Seeds", "Chocolates", 
+    "Hot Sauce Set", "Spice Jar", "Recipe Cards", "DIY Candle Kit", "Ceramic Mug", 
+    "Fitness Resistance Bands", "Pedometer", "Hiking Bottle", "Scented Sachets"
+]
+
+# List of image filenames stored in the static/images folder
+image_filenames = [
+    "event1.png", "event2.png", "event3.png",
+    "event4.png", "event5.png", "event6.png"
 ]
 
 @app.route('/')
@@ -129,7 +151,7 @@ def secretsanta_logged_in():
 @app.route('/home')
 def home():
     if "user" in session:
-        return render_template('home.html', user=session["user"])
+        return render_template('suzanhome.html', user=session["user"])
     else:
         flash("Please log in to access the Home Page.", "error")
         return redirect(url_for('login'))
@@ -140,13 +162,30 @@ def logout():
     flash("You have been logged out.", "success")
     return redirect(url_for('index'))
 
-@app.route("/volunteer")
+@app.route('/volunteer')
 def volunteer():
-    return render_template("volunteer.html")
+    return render_template('volunteer.html', images=image_filenames)
 
 @app.route("/leaderboard")
 def leaderboard():
     return render_template("leaderboard.html")
+
+@app.route('/add-to-events', methods=['POST'])
+def add_to_events():
+    if "user" in session:  # Check if the user is logged in
+        data = request.json
+        event = data.get('event')
+        username = session["user"]  # Logged-in user's name (not email)
+
+        # Add event to the user's document using 'name'
+        db.Users.update_one(
+            {"name": username},  # Match using the 'name' field
+            {"$addToSet": {"events": event}}  # Add event, prevent duplicates
+        )
+
+        return jsonify({"success": True, "message": "Event added successfully!"})
+    else:
+        return jsonify({"success": False, "message": "User not logged in"}), 401
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
