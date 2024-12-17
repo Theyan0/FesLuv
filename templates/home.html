@@ -11,10 +11,13 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            min-height: 100%; /* Allow body to expand if content overflows */
             background: linear-gradient(135deg, #e4101e, #2fc0e8);
-            justify-content: center;
+            justify-content: flex-start; /* Align content from top */
             align-items: center;
+            position: relative; /* Allow positioning of child elements */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            overflow-y: auto; /* Allow vertical scrolling */
         }
 
         h2 {
@@ -22,28 +25,33 @@
             text-align: center;
             font-size: 2.5rem;
             color: #fff;
+            position: relative; /* Keep it above snowflakes */
+            z-index: 2;
         }
 
         .card-container {
             display: flex;
             flex-direction: column;
-            gap: 30px; 
+            gap: 30px;
             align-items: center;
-            width: 90%; 
-            max-width: 800px; 
+            width: 90%;
+            max-width: 800px;
+            position: relative; /* Keep cards above snowflakes */
+            z-index: 2;
+            margin-bottom: 30px;
         }
 
         .card {
             width: 100%;
             border-radius: 15px;
-            overflow: hidden; 
+            overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card img {
             width: 100%;
-            display: block; 
+            display: block;
             cursor: pointer;
         }
 
@@ -51,7 +59,7 @@
             transform: scale(1.03);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
         }
-        
+
         .navbar {
             width: 100%;
             display: flex;
@@ -62,7 +70,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 1000;
+            z-index: 3; /* Ensure navbar stays above snowflakes */
         }
 
         .navbar a {
@@ -80,30 +88,41 @@
             display: inline-block;
         }
 
-        .navbar .logout {
-            justify-content: flex-start;
+        /* Snowflake Effect */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1.5em;
+            pointer-events: none;
+            animation: fall linear infinite;
+            z-index: 1; /* Ensure snowflakes stay behind everything */
         }
 
-        .navbar .profile {
-            justify-content: flex-end;
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
         }
     </style>
 </head>
 <body>
-        <div class="navbar">
-            <a href="{{ url_for('index') }}" class="logout">
-                <img src="{{ url_for('static', filename='images/logout_icon.png') }}" alt="Logout Icon">
-            </a>
-    
-            <a class="profile">
-                <img src="{{ url_for('static', filename='images/profile_icon.png') }}" alt="Profile Icon">
-            </a>
-        </div>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="{{ url_for('index') }}" class="logout">
+            <img src="{{ url_for('static', filename='images/logout_icon.png') }}" alt="Logout Icon">
+        </a>
+
+        <a href="{{ url_for('volunteer') }}" class="profile">
+            <img src="{{ url_for('static', filename='images/profile_icon.png') }}" alt="Profile Icon">
+        </a>
+    </div>
 
     <h2>Welcome, {{ user }}!</h2>
+    <h3>Choose your activity!</h3>
 
+    <!-- Card Container -->
     <div class="card-container">
-
         <!-- Secret Santa Card -->
         <a href="{{ url_for('secretsanta_logged_in') }}" class="card">
             <img src="{{ url_for('static', filename='images/santa_card.png') }}" alt="Secret Santa">
@@ -118,8 +137,32 @@
         <a href="{{ url_for('leaderboard') }}" class="card">
             <img src="{{ url_for('static', filename='images/leaderboard_card.png') }}" alt="Leaderboard">
         </a>
-
     </div>
+
+    <!-- Snowflake Effect -->
+    <script>
+        const snowflakes = ["❄️", "☃️", "❅", "❆"];
+        const snowContainer = document.body;
+
+        function createSnowflake() {
+            const snowflake = document.createElement("div");
+            snowflake.className = "snowflake";
+            snowflake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+            snowflake.style.left = Math.random() * 100 + "vw";
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s"; // Random fall speed
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 1.5 + 1 + "em";
+
+            snowContainer.appendChild(snowflake);
+
+            // Remove snowflakes when they're out of view
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 100); // Generate snowflakes
+    </script>
 
 </body>
 </html>
