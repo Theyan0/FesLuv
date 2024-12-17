@@ -4,10 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .logout {
+            margin-top: auto;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome, {{ user }}!</h1>
-    <p>This is your home page.</p>
-    <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+    <div class="button-container">
+        <a href="{{ url_for('secretsanta_logged_in') }}"><button>SecretSanta</button></a> 
+
+        <a href="{{ url_for('volunteer') }}"><button>Volunteer</button></a>
+        <a href="{{ url_for('leaderboard') }}"><button>Leaderboard</button></a>
+    </div>
+    <div class="logout">
+        <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+    </div>
 </body>
 </html>
