@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Signup</h1>
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash flash-{{ category }}">{{ message }}</div>
+              <!-- Show Popup if error -->
+              {% if category == 'error' %}
+              <script>
+                  alert("{{ message }}");
+              </script>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        
+        <!-- Signup Form -->
+        <form method="POST" action="{{ url_for('signup') }}">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="1" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+</body>
+</html>
