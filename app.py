@@ -151,7 +151,7 @@ def secretsanta_logged_in():
 @app.route('/home')
 def home():
     if "user" in session:
-        return render_template('suzanhome.html', user=session["user"])
+        return render_template('home.html', user=session["user"])
     else:
         flash("Please log in to access the Home Page.", "error")
         return redirect(url_for('login'))
