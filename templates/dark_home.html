@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Suzan</title>
+    <style>
+        /* General Page Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #001f4d, #6e6f91);
+            color: #000;
+            overflow-x: hidden;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #fff;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .card {
+            background-color: #fff8e5;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .card img {
+            width: 1040px;
+            height: 500px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .card img:hover {
+            transform: scale(1.05); /* Slight zoom effect */
+        }
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1.5em;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Message -->
+    <h1>Welcome Suzan</h1>
+    <h2>Choose your activity!</h2>
+
+    <!-- Activity Cards -->
+    <div class="container">
+        <div class="card">
+            <a href="{{ url_for('secretsanta_logged_in') }}">
+                <img src="{{ url_for('static', filename='images/santa_card.png') }}" alt="Secret Santa">
+            </a>
+        </div>
+        <div class="card">
+            <a href="{{ url_for('volunteer') }}">
+                <img src="{{ url_for('static', filename='images/volunteer_card.png') }}" alt="Volunteer">
+            </a>
+        </div>
+        <div class="card">
+            <a href="{{ url_for('leaderboard') }}">
+                <img src="{{ url_for('static', filename='images/leaderboard_card.png') }}" alt="Leaderboard">
+            </a>
+        </div>
+    </div>
+
+    <!-- Snowflake Effect -->
+    <script>
+        const snowflakes = ["❄️", "☃️", "❅", "❆"];
+        const snowContainer = document.body;
+
+        function createSnowflake() {
+            const snowflake = document.createElement("div");
+            snowflake.className = "snowflake";
+            snowflake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+            snowflake.style.left = Math.random() * 100 + "vw";
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s"; // Random fall speed
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 1.5 + 1 + "em";
+
+            snowContainer.appendChild(snowflake);
+
+            // Remove snowflakes when they're out of view
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 100); // Generate snowflakes
+    </script>
+</body>
+</html>
