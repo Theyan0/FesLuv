@@ -7,56 +7,74 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e4101e, #2fc0e8);
             justify-content: center;
             align-items: center;
-            background-color: #f9f9f9;
         }
-        h1 {
-            margin-bottom: 20px;
+
+        h2 {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 2.5rem;
+            color: #fff;
         }
-        .button-container {
+
+        .card-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 30px; 
+            align-items: center;
+            width: 90%; 
+            max-width: 800px; 
         }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
+
+        .card {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card img {
+            width: 100%;
+            display: block; 
             cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            transition: background-color 0.3s;
         }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .logout {
-            margin-top: auto;
-        }
-        a {
-            text-decoration: none;
+
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 <body>
-    <h1>Welcome, {{ user }}!</h1>
-    <div class="button-container">
-        <a href="{{ url_for('secretsanta_logged_in') }}"><button>SecretSanta</button></a> 
 
-        <a href="{{ url_for('volunteer') }}"><button>Volunteer</button></a>
-        <a href="{{ url_for('leaderboard') }}"><button>Leaderboard</button></a>
+    <h2>Welcome, {{ user }}!</h2>
+
+    <div class="card-container">
+
+        <!-- Secret Santa Card -->
+        <a href="{{ url_for('secretsanta_logged_in') }}" class="card">
+            <img src="{{ url_for('static', filename='images/santa_card.png') }}" alt="Secret Santa">
+        </a>
+
+        <!-- Volunteer Card -->
+        <a href="{{ url_for('volunteer') }}" class="card">
+            <img src="{{ url_for('static', filename='images/volunteer_card.png') }}" alt="Volunteer">
+        </a>
+
+        <!-- Leaderboard Card -->
+        <a href="{{ url_for('leaderboard') }}" class="card">
+            <img src="{{ url_for('static', filename='images/leaderboard_card.png') }}" alt="Leaderboard">
+        </a>
+
     </div>
-    <div class="logout">
-        <a href="{{ url_for('logout') }}"><button>Logout</button></a>
-    </div>
+
 </body>
 </html>
