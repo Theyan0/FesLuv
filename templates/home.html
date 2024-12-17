@@ -51,9 +51,54 @@
             transform: scale(1.03);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
         }
+        
+        .navbar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .navbar a img {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+        }
+
+        .navbar .logout {
+            justify-content: flex-start;
+        }
+
+        .navbar .profile {
+            justify-content: flex-end;
+        }
     </style>
 </head>
 <body>
+        <div class="navbar">
+            <a href="{{ url_for('index') }}" class="logout">
+                <img src="{{ url_for('static', filename='images/logout_icon.png') }}" alt="Logout Icon">
+            </a>
+    
+            <a class="profile">
+                <img src="{{ url_for('static', filename='images/profile_icon.png') }}" alt="Profile Icon">
+            </a>
+        </div>
 
     <h2>Welcome, {{ user }}!</h2>
 
