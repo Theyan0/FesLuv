@@ -60,30 +60,6 @@
     </style>
 </head>
 <body>
-    <nav style="
-    background-color: #6F171F;
-    padding: 10px 30px; /* Top-bottom: 10px, Left-right: 30px */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds drop shadow */
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: calc(100% - 60px); /* Subtract padding from width */
-    margin: 0 0px; /* Adds space on the left and right */
-    z-index: 1000;
-">
-
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <div style="font-weight: bold; font-size: 1.5em; color: #EEE5D4; margin-left: 10px;">
-            The <span style="font-style: italic;">JoyVerse</span>
-        </div>
-        <div>
-            <a href="{{ url_for('home') }}" style="color: #EEE5D4; text-decoration: none; margin: 0 15px;">Home Page</a>
-            <a href="{{ url_for('volunteer') }}" style="color: #EEE5D4; text-decoration: none; margin: 0 15px;">Volunteer</a>
-            <a href="{{ url_for('leaderboard') }}" style="color: #EEE5D4; text-decoration: none; margin: 0 15px;">Leaderboard</a>
-            <a href="{{ url_for('secretsanta_logged_in') }}" style="color: #EEE5D4; text-decoration: none; margin: 0 15px;">Secret Santa</a>
-        </div>
-    </div>
-</nav>
     <div class="carousel">
         <div class="cards">
             <img src="/static/images/event1.png" alt="Event 1" draggable="false">
