@@ -5,8 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secret Santa - Wishlist</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #2E3B4E; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e4101e, #2fc0e8);
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: #fff;
+            margin: 20px 0;
+            z-index: 2;
+        }
+
         .reminder {
             background-color: #FFDD57;
             padding: 10px;
@@ -16,25 +35,203 @@
             font-weight: bold;
             color: #5C4C00;
             margin-bottom: 20px;
+            z-index: 2;
         }
-        form { margin-top: 20px; }
-        button { margin-top: 10px; }
+
+        .card-container {
+            width: 90%;
+            max-width: 600px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            z-index: 2;
+        }
+
+        .card-container h1 {
+            color: #2E3B4E;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        #wishlist-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .show-more {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #2fc0e8;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .show-more:hover {
+            background-color: #1a9cb8;
+        }
+
+        .show-less {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .show-less:hover {
+            background-color: #e04e3e;
+        }
+
+        button[type="submit"] {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e4101e;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #c30d19;
+        }
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1.5em;
+            pointer-events: none;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Snowflake Effect -->
+    <script>
+        const snowflakes = ["❄️", "☃️", "❅", "❆"];
+        const snowContainer = document.body;
+
+        function createSnowflake() {
+            const snowflake = document.createElement("div");
+            snowflake.className = "snowflake";
+            snowflake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+            snowflake.style.left = Math.random() * 100 + "vw";
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 1.5 + 1 + "em";
+
+            snowContainer.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 100);
+    </script>
+
     <!-- Reminder Banner -->
     <div class="reminder">
-        🎄 Reminder: Secret Santa ends on **December 25th**! Make sure to finalize your wishlist and gift.
+        🎄 Reminder: Secret Santa ends on <strong>December 25th</strong>! Finalize your wishlist and gift.
     </div>
 
-    <h1>Welcome, {{ username }} 🎅</h1>
-    <p>Please select exactly 10 items for your wishlist:</p>
+    <!-- Card Container -->
+    <div class="card-container">
+        <h1>Welcome, {{ username }} 🎅</h1>
+        <p>Please select exactly 10 items for your wishlist:</p>
+        <form method="POST">
+            <div id="wishlist-items">
+
+            </div>
+            <button id="show-more" class="show-more" type="button">Show More</button>
+            <button id="show-less" class="show-less" type="button" style="display: none;">Show Less</button>
+            <button type="submit">Save Wishlist and Draw Receiver</button>
+        </form>
+    </div>
     
-    <form method="POST">
-        {% for item in items_list %}
-            <input type="checkbox" name="wishlist_items" value="{{ item }}"> {{ item }}<br>
-        {% endfor %}
-        <button type="submit">Save Wishlist and Draw Receiver</button>
-    </form>
+    <!-- Buttons Function -->
+    <script>
+        const itemsList = {{ items_list | tojson }};
+        const itemsContainer = document.getElementById('wishlist-items');
+        const showMoreButton = document.getElementById('show-more');
+        const showLessButton = document.getElementById('show-less');
+        
+        let displayedItemsCount = 0;
+        const itemsPerPage = 10;
+
+        function updateItemsDisplay() {
+            itemsContainer.innerHTML = "";
+
+            const visibleItems = itemsList.slice(0, displayedItemsCount);
+            visibleItems.forEach(item => {
+                const label = document.createElement('label');
+                label.innerHTML = `
+                    <input type="checkbox" name="wishlist_items" value="${item}">
+                    ${item}
+                `;
+                itemsContainer.appendChild(label);
+            });
+
+            if (displayedItemsCount >= itemsList.length) {
+                showMoreButton.style.display = "none";
+            } else {
+                showMoreButton.style.display = "block";
+            }
+
+            if (displayedItemsCount > itemsPerPage) {
+                showLessButton.style.display = "block";
+            } else {
+                showLessButton.style.display = "none";
+            }
+        }
+
+        function showMoreItems() {
+            displayedItemsCount = Math.min(displayedItemsCount + itemsPerPage, itemsList.length);
+            updateItemsDisplay();
+        }
+
+        function showLessItems() {
+            displayedItemsCount = Math.max(displayedItemsCount - itemsPerPage, itemsPerPage);
+            updateItemsDisplay();
+        }
+
+        displayedItemsCount = itemsPerPage;
+        updateItemsDisplay();
+
+        showMoreButton.onclick = showMoreItems;
+        showLessButton.onclick = showLessItems;
+    </script>    
+
 </body>
 </html>

@@ -11,13 +11,13 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100%; /* Allow body to expand if content overflows */
+            min-height: 100%; 
             background: linear-gradient(135deg, #e4101e, #2fc0e8);
-            justify-content: flex-start; /* Align content from top */
+            justify-content: flex-start; 
             align-items: center;
-            position: relative; /* Allow positioning of child elements */
-            overflow-x: hidden; /* Prevent horizontal scrolling */
-            overflow-y: auto; /* Allow vertical scrolling */
+            position: relative; 
+            overflow-x: hidden; 
+            overflow-y: auto; 
         }
 
         h2 {
@@ -25,7 +25,7 @@
             text-align: center;
             font-size: 2.5rem;
             color: #fff;
-            position: relative; /* Keep it above snowflakes */
+            position: relative; 
             z-index: 2;
         }
 
@@ -36,7 +36,7 @@
             align-items: center;
             width: 90%;
             max-width: 800px;
-            position: relative; /* Keep cards above snowflakes */
+            position: relative; 
             z-index: 2;
             margin-bottom: 30px;
         }
@@ -70,7 +70,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 3; /* Ensure navbar stays above snowflakes */
+            z-index: 3; 
         }
 
         .navbar a {
@@ -96,7 +96,7 @@
             font-size: 1.5em;
             pointer-events: none;
             animation: fall linear infinite;
-            z-index: 1; /* Ensure snowflakes stay behind everything */
+            z-index: 1; 
         }
 
         @keyframes fall {
@@ -155,13 +155,13 @@
 
             snowContainer.appendChild(snowflake);
 
-            // Remove snowflakes when they're out of view
+            
             setTimeout(() => {
                 snowflake.remove();
             }, 5000);
         }
 
-        setInterval(createSnowflake, 100); // Generate snowflakes
+        setInterval(createSnowflake, 100); 
     </script>
 
 </body>
