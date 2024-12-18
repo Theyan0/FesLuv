@@ -65,8 +65,13 @@
             margin-right: 10px;
         }
 
-        .show-more {
+        .button-container {
+            display: flex;
+            gap: 10px;
             margin-top: 20px;
+        }
+
+        .button {
             padding: 10px;
             background-color: #6F171F;
             color: #fff;
@@ -75,25 +80,10 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             opacity: 70%;
+            width: 400px;
         }
 
-        .show-more:hover {
-            background-color: #000;
-        }
-
-        .show-less {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #6F171F;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            opacity: 70%;
-        }
-
-        .show-less:hover {
+        .button:hover {
             background-color: #000;
         }
 
@@ -160,11 +150,11 @@
         <h1>Welcome, {{ username }} 🎅</h1>
         <p>Please select exactly 10 items for your wishlist:</p>
         <form method="POST">
-            <div id="wishlist-items">
-
+            <div id="wishlist-items"></div>
+            <div class="button-container">
+                <button id="show-more" class="button" type="button">Show More</button>
+                <button id="show-less" class="button" type="button">Show Less</button>
             </div>
-            <button id="show-more" class="show-more" type="button">Show More</button>
-            <button id="show-less" class="show-less" type="button" style="display: none;">Show Less</button>
             <button type="submit">Save Wishlist and Draw Receiver</button>
         </form>
     </div>
@@ -175,7 +165,7 @@
         const itemsContainer = document.getElementById('wishlist-items');
         const showMoreButton = document.getElementById('show-more');
         const showLessButton = document.getElementById('show-less');
-        
+
         let displayedItemsCount = 0;
         const itemsPerPage = 10;
 
@@ -191,18 +181,6 @@
                 `;
                 itemsContainer.appendChild(label);
             });
-
-            if (displayedItemsCount >= itemsList.length) {
-                showMoreButton.style.display = "none";
-            } else {
-                showMoreButton.style.display = "block";
-            }
-
-            if (displayedItemsCount > itemsPerPage) {
-                showLessButton.style.display = "block";
-            } else {
-                showLessButton.style.display = "none";
-            }
         }
 
         function showMoreItems() {
