@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Screen Background</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif; 
+            background-image: url('static\\images\\secret_santa_intro_background.png'); /* Replace with your image path */
+            background-size: cover; /* Ensures the image covers the entire screen */
+            background-repeat: no-repeat; /* Prevents tiling */
+            background-position: center; /* Centers the image */
+        }
+        .content {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+            padding: 20px 30px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Welcome to JoyVerse</h1>
+        <p>Join us in spreading joy and kindness to the community!</p>
+    </div>
+</body>
+</html>
