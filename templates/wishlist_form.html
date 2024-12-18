@@ -14,7 +14,7 @@
             align-items: center;
             justify-content: flex-start;
             min-height: 100vh;
-            background-image: url('static\\images\\homebg.jpeg');
+            background-color: #EEE5D4;
             background-size: cover;
             background-repeat: no-repeat;
             position: relative;
@@ -145,6 +145,9 @@
         setInterval(createSnowflake, 100);
     </script>
 
+    <!-- Include Navbar -->
+    {% include 'navbar.html' %}
+    
     <!-- Card Container -->
     <div class="card-container">
         <h1>Welcome, {{ username }} 🎅</h1>

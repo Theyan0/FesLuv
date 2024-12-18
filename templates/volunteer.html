@@ -57,9 +57,51 @@
             transform: scale(0.8) rotateY(-45deg);
             opacity: 0.5;
         }
+        /* Snowflake Effect */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1.5em;
+            pointer-events: none;
+            animation: fall linear infinite;
+            z-index: 0; 
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
     </style>
 </head>
 <body>
+    
+    <!-- Snowflake Effect -->
+    <script>
+        const snowflakes = ["❄️", "❅", "❆"];
+        const snowContainer = document.body;
+
+        function createSnowflake() {
+            const snowflake = document.createElement("div");
+            snowflake.className = "snowflake";
+            snowflake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+            snowflake.style.left = Math.random() * 1000 + "vw";
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 1.5 + 1 + "em";
+
+            snowContainer.appendChild(snowflake);
+
+            
+            setTimeout(() => {
+                snowflake.remove();
+            }, 50000);
+        }
+
+        setInterval(createSnowflake, 100); 
+    </script>
+
     <nav style="
     background-color: #6F171F;
     padding: 10px 30px; /* Top-bottom: 10px, Left-right: 30px */

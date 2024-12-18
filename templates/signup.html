@@ -157,6 +157,30 @@
     </style>
 </head>
 <body>
+    <!-- Snowflake Effect -->
+    <script>
+        const snowflakes = ["❄️", "❅", "❆"];
+        const snowContainer = document.body;
+
+        function createSnowflake() {
+            const snowflake = document.createElement("div");
+            snowflake.className = "snowflake";
+            snowflake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+            snowflake.style.left = Math.random() * 1000 + "vw";
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 1.5 + 1 + "em";
+
+            snowContainer.appendChild(snowflake);
+
+            
+            setTimeout(() => {
+                snowflake.remove();
+            }, 50000);
+        }
+
+        setInterval(createSnowflake, 100); 
+    </script>
     <!-- Animated Background -->
     <div class="bg"></div>
     <div class="bg bg2"></div>
@@ -182,29 +206,5 @@
         </form>
         <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a>.</p>
     </div>
-    <!-- Snowflake Effect -->
-    <script>
-        const snowflakes = ["❄️", "❅", "❆"];
-        const snowContainer = document.body;
-
-        function createSnowflake() {
-            const snowflake = document.createElement("div");
-            snowflake.className = "snowflake";
-            snowflake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
-            snowflake.style.left = Math.random() * 1000 + "vw";
-            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
-            snowflake.style.opacity = Math.random();
-            snowflake.style.fontSize = Math.random() * 1.5 + 1 + "em";
-
-            snowContainer.appendChild(snowflake);
-
-            
-            setTimeout(() => {
-                snowflake.remove();
-            }, 50000);
-        }
-
-        setInterval(createSnowflake, 100); 
-    </script>
 </body>
 </html>

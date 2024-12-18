@@ -30,7 +30,7 @@
             width: 90%;
             max-width: 800px;
             position: relative; 
-            z-index: 2;
+            z-index: 1;
             margin-bottom: 30px;
             margin-top: 100px;
         }
@@ -43,11 +43,52 @@
             display: block;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+        /* Snowflake Effect */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1.5em;
+            pointer-events: none;
+            animation: fall linear infinite;
+            z-index: 0; 
+        }
 
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- Snowflake Effect -->
+    <script>
+        const snowflakes = ["❄️", "❅", "❆"];
+        const snowContainer = document.body;
+
+        function createSnowflake() {
+            const snowflake = document.createElement("div");
+            snowflake.className = "snowflake";
+            snowflake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+            snowflake.style.left = Math.random() * 1000 + "vw";
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 1.5 + 1 + "em";
+
+            snowContainer.appendChild(snowflake);
+
+            
+            setTimeout(() => {
+                snowflake.remove();
+            }, 50000);
+        }
+
+        setInterval(createSnowflake, 100); 
+    </script>
+
     <!-- Include Navbar -->
     {% include 'navbar.html' %}
 
