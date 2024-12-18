@@ -14,7 +14,9 @@
             align-items: center;
             justify-content: flex-start;
             min-height: 100vh;
-            background: linear-gradient(135deg, #e4101e, #2fc0e8);
+            background-image: url('static\\images\\homebg.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
             position: relative;
             overflow-x: hidden;
             overflow-y: auto;
@@ -26,26 +28,15 @@
             z-index: 2;
         }
 
-        .reminder {
-            background-color: #FFDD57;
-            padding: 10px;
-            border: 1px solid #E0B400;
-            border-radius: 5px;
-            text-align: center;
-            font-weight: bold;
-            color: #5C4C00;
-            margin-bottom: 20px;
-            z-index: 2;
-        }
-
         .card-container {
             width: 90%;
             max-width: 600px;
-            background: #fff;
+            background: #EEE5D4;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             padding: 20px;
             z-index: 2;
+            margin-top: 200px;
         }
 
         .card-container h1 {
@@ -77,42 +68,45 @@
         .show-more {
             margin-top: 20px;
             padding: 10px;
-            background-color: #2fc0e8;
+            background-color: #6F171F;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            opacity: 70%;
         }
 
         .show-more:hover {
-            background-color: #1a9cb8;
+            background-color: #000;
         }
 
         .show-less {
             margin-top: 20px;
             padding: 10px;
-            background-color: #ff6347;
+            background-color: #6F171F;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            opacity: 70%;
         }
 
         .show-less:hover {
-            background-color: #e04e3e;
+            background-color: #000;
         }
 
         button[type="submit"] {
             margin-top: 20px;
             padding: 10px;
-            background-color: #e4101e;
+            background-color: #6F171F;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            opacity: 100%;
         }
 
         button[type="submit"]:hover {
@@ -161,11 +155,6 @@
         setInterval(createSnowflake, 100);
     </script>
 
-    <!-- Reminder Banner -->
-    <div class="reminder">
-        🎄 Reminder: Secret Santa ends on <strong>December 25th</strong>! Finalize your wishlist and gift.
-    </div>
-
     <!-- Card Container -->
     <div class="card-container">
         <h1>Welcome, {{ username }} 🎅</h1>
@@ -179,7 +168,7 @@
             <button type="submit">Save Wishlist and Draw Receiver</button>
         </form>
     </div>
-    
+
     <!-- Buttons Function -->
     <script>
         const itemsList = {{ items_list | tojson }};

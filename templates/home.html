@@ -11,8 +11,10 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100%; 
-            background: linear-gradient(135deg, #e4101e, #2fc0e8);
+            min-height: 100%;
+            background-image: url('static\\images\\homebg.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
             justify-content: flex-start; 
             align-items: center;
             position: relative; 
@@ -20,14 +22,7 @@
             overflow-y: auto; 
         }
 
-        h2 {
-            margin: 20px 0;
-            text-align: center;
-            font-size: 2.5rem;
-            color: #fff;
-            position: relative; 
-            z-index: 2;
-        }
+
 
         .card-container {
             display: flex;
@@ -39,6 +34,7 @@
             position: relative; 
             z-index: 2;
             margin-bottom: 30px;
+            margin-top: 200px;
         }
 
         .card {
@@ -110,16 +106,12 @@
     <!-- Navigation Bar -->
     <div class="navbar">
         <a href="{{ url_for('index') }}" class="logout">
-            <img src="{{ url_for('static', filename='images/logout_icon.png') }}" alt="Logout Icon">
         </a>
 
         <a href="{{ url_for('volunteer') }}" class="profile">
-            <img src="{{ url_for('static', filename='images/profile_icon.png') }}" alt="Profile Icon">
         </a>
     </div>
 
-    <h2>Welcome, {{ user }}!</h2>
-    <h3>Choose your activity!</h3>
 
     <!-- Card Container -->
     <div class="card-container">
