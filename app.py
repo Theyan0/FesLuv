@@ -45,9 +45,13 @@ image_filenames = [
 def index():
     return render_template('index.html')  # Default page with Login/Signup buttons
 
-@app.route('/bg')
-def bg():
-    return render_template('bg.html')  # Default page with Login/Signup buttons
+@app.route('/base')
+def base():
+    return render_template('base.html')  # Default page with Login/Signup buttons
+
+@app.route('/santa_intro')
+def santa_intro():
+    return render_template('santa_intro.html')  # Default page with Login/Signup buttons
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
