@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swipeable 3D Card Carousel</title>
+    <title>Volunteer</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,14 +16,50 @@
             background: #d7ccb6;
         }
 
+        nav {
+            background-color: #6F171F;
+            padding: 10px 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: calc(100% - 60px);
+            margin: 0 0px;
+            z-index: 1000;
+        }
+
+        nav div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav div a {
+            color: #EEE5D4;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        nav div a:hover {
+            text-decoration: underline;
+        }
+
+        nav .brand {
+            font-weight: bold;
+            font-size: 1.5em;
+            color: #EEE5D4;
+            margin-left: 10px;
+        }
+
         .carousel {
             overflow: hidden;
-            width: 380px; /* Increased width */
-            height: 550px; /* Increased height */
+            width: 570px;
+            height: 825px;
             position: relative;
             border-radius: 10px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             perspective: 1000px;
+            z-index: 2;
         }
 
         .cards {
@@ -33,14 +69,14 @@
         }
 
         .cards img {
-            width: 380px; /* Increased width */
-            height: 550px; /* Increased height */
+            width: 570px;
+            height: 825px;
             object-fit: cover;
             flex-shrink: 0;
             border-radius: 10px;
             transform-origin: center;
             transition: transform 0.5s ease, opacity 0.3s ease;
-            user-select: none; /* Prevent text selection */
+            user-select: none;
         }
 
         .cards img.current {
@@ -58,7 +94,6 @@
             opacity: 0.5;
         }
 
-        /* Snowflake Effect */
         .snowflake {
             position: fixed;
             top: -10px;
@@ -66,7 +101,7 @@
             font-size: 1.5em;
             pointer-events: none;
             animation: fall linear infinite;
-            z-index: 0; 
+            z-index: 0;
         }
 
         @keyframes fall {
@@ -75,7 +110,6 @@
             }
         }
 
-        /* Swipe Indicators */
         .swipe-indicator {
             position: absolute;
             top: 50%;
@@ -102,7 +136,6 @@
             transform: translateY(-50%);
         }
 
-        /* Cursor style to indicate swipe */
         .carousel {
             cursor: grab;
         }
@@ -113,7 +146,9 @@
     </style>
 </head>
 <body>
-    
+    <!-- Navbar -->
+    {% include 'navbar.html' %}
+
     <!-- Snowflake Effect -->
     <script>
         const snowflakes = ["❄️", "❅", "❆"];
@@ -123,7 +158,7 @@
             const snowflake = document.createElement("div");
             snowflake.className = "snowflake";
             snowflake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
-            snowflake.style.left = Math.random() * 1000 + "vw";
+            snowflake.style.left = Math.random() * 100 + "vw";
             snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
             snowflake.style.opacity = Math.random();
             snowflake.style.fontSize = Math.random() * 1.5 + 1 + "em";
@@ -135,33 +170,8 @@
             }, 50000);
         }
 
-        setInterval(createSnowflake, 100); 
+        setInterval(createSnowflake, 180);
     </script>
-
-    <nav style="
-    background-color: #6F171F;
-    padding: 10px 30px; /* Top-bottom: 10px, Left-right: 30px */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds drop shadow */
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: calc(100% - 60px); /* Subtract padding from width */
-    margin: 0 0px; /* Adds space on the left and right */
-    z-index: 1000;
-">
-
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <div style="font-weight: bold; font-size: 1.5em; color: #EEE5D4; margin-left: 10px;">
-            The <span style="font-style: italic;">JoyVerse</span>
-        </div>
-        <div>
-            <a href="{{ url_for('home') }}" style="color: #EEE5D4; text-decoration: none; margin: 0 15px;">Home Page</a>
-            <a href="{{ url_for('volunteer') }}" style="color: #EEE5D4; text-decoration: none; margin: 0 15px;">Volunteer</a>
-            <a href="{{ url_for('leaderboard') }}" style="color: #EEE5D4; text-decoration: none; margin: 0 15px;">Leaderboard</a>
-            <a href="{{ url_for('secretsanta_logged_in') }}" style="color: #EEE5D4; text-decoration: none; margin: 0 15px;">Secret Santa</a>
-        </div>
-    </div>
-</nav>
 
     <div class="carousel">
         <div class="cards">
@@ -171,7 +181,6 @@
             <img src="/static/images/event4.png" alt="Event 4" draggable="false">
             <img src="/static/images/event5.png" alt="Event 5" draggable="false">
         </div>
-        <!-- Swipe Indicators -->
         <div class="swipe-indicator left" onclick="prevCard()">❮</div>
         <div class="swipe-indicator right" onclick="nextCard()">❯</div>
     </div>
@@ -199,7 +208,7 @@
         }
 
         function setCarouselPosition() {
-            cards.style.transform = `translateX(${-currentIndex * 380}px)`; /* Adjusted for new size */
+            cards.style.transform = `translateX(${-currentIndex * 570}px)`;
         }
 
         function dragStart(event) {
@@ -214,14 +223,12 @@
             const currentX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
             currentTranslate = prevTranslate + currentX - startX;
             cards.style.transform = `translateX(${currentTranslate}px)`;
-
-            // Prevent default drag behavior
             event.preventDefault();
         }
 
         function dragEnd() {
             isDragging = false;
-            const threshold = 100;
+            const threshold = 150;
             const movedBy = currentTranslate - prevTranslate;
 
             if (movedBy > threshold) {
@@ -230,7 +237,7 @@
                 currentIndex = (currentIndex + 1) % images.length;
             }
 
-            currentTranslate = -currentIndex * 380; /* Adjusted for new size */
+            currentTranslate = -currentIndex * 570;
             cards.style.transition = 'transform 0.5s ease';
             setCarouselPosition();
             setCarouselClasses();
@@ -260,7 +267,6 @@
             if (isDragging) dragEnd();
         });
 
-        // Initialize
         setCarouselClasses();
     </script>
 </body>

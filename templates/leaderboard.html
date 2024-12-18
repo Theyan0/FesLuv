@@ -29,20 +29,19 @@
             align-items: center;
             width: 90%;
             max-width: 800px;
-            position: relative; 
-            
+            position: relative;
             margin-bottom: 30px;
             margin-top: 100px;
+            z-index: 1; /* Ensure it's above the snowflake */
         }
 
         .card {
             width: 100%;
             border-radius: 15px;
             overflow: hidden;
-            
             display: block;
-           
         }
+
         /* Snowflake Effect */
         .snowflake {
             position: fixed;
@@ -51,7 +50,7 @@
             font-size: 1.5em;
             pointer-events: none;
             animation: fall linear infinite;
-            z-index: 0; 
+            z-index: -1; /* Move behind all elements */
         }
 
         @keyframes fall {
@@ -73,20 +72,19 @@
             const snowflake = document.createElement("div");
             snowflake.className = "snowflake";
             snowflake.textContent = snowflakes[Math.floor(Math.random() * snowflakes.length)];
-            snowflake.style.left = Math.random() * 1000 + "vw";
+            snowflake.style.left = Math.random() * 100 + "vw";
             snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
             snowflake.style.opacity = Math.random();
             snowflake.style.fontSize = Math.random() * 1.5 + 1 + "em";
 
             snowContainer.appendChild(snowflake);
 
-            
             setTimeout(() => {
                 snowflake.remove();
             }, 50000);
         }
 
-        setInterval(createSnowflake, 100); 
+        setInterval(createSnowflake, 200); 
     </script>
 
     <!-- Include Navbar -->
@@ -94,7 +92,7 @@
 
     <!-- Card Container -->
     <div class="card-container">
-        <h2>Leaderboard</h2>
+        <h1>Leaderboard</h1>
         <img class="card" src="{{ url_for('static', filename='images/Leaderboard_Map.png') }}" alt="Secret Santa">
         <img class="card" src="{{ url_for('static', filename='images/Leaderboard_Points.png') }}" alt="Volunteer">
     </div>
