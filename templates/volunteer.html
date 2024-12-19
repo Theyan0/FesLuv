@@ -53,8 +53,8 @@
 
         .carousel {
             overflow: hidden;
-            width: 570px;
-            height: 825px;
+            width: 387.6px;
+            height: 561px;
             position: relative;
             border-radius: 10px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -69,8 +69,8 @@
         }
 
         .cards img {
-            width: 570px;
-            height: 825px;
+            width: 387.6px;
+            height: 561px;
             object-fit: cover;
             flex-shrink: 0;
             border-radius: 10px;
@@ -208,7 +208,7 @@
         }
 
         function setCarouselPosition() {
-            cards.style.transform = `translateX(${-currentIndex * 570}px)`;
+            cards.style.transform = `translateX(${-currentIndex * 387.6}px)`;
         }
 
         function dragStart(event) {
@@ -237,7 +237,7 @@
                 currentIndex = (currentIndex + 1) % images.length;
             }
 
-            currentTranslate = -currentIndex * 570;
+            currentTranslate = -currentIndex * 387.6;
             cards.style.transition = 'transform 0.5s ease';
             setCarouselPosition();
             setCarouselClasses();
