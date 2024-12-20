@@ -41,17 +41,13 @@ image_filenames = [
     "event4.png", "event5.png", "event6.png"
 ]
 
+# Landing page
+
 @app.route('/')
 def index():
     return render_template('index.html')  # Default page with Login/Signup buttons
 
-@app.route('/base')
-def base():
-    return render_template('base.html')  # Default page with Login/Signup buttons
-
-@app.route('/santa_intro')
-def santa_intro():
-    return render_template('santa_intro.html')  # Default page with Login/Signup buttons
+# Login - Sign Up
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -99,6 +95,18 @@ def login():
             flash("Invalid email or password. Please try again or sign up.", "error")
             return redirect(url_for('login'))
     return render_template('login.html')
+
+# Home Page
+
+@app.route('/home')
+def home():
+    if "user" in session:
+        return render_template('home.html', user=session["user"])
+    else:
+        flash("Please log in to access the Home Page.", "error")
+        return redirect(url_for('login'))
+
+# Secret Santa
 
 @app.route('/secretsanta', methods=['GET', 'POST'])
 def secretsanta_logged_in():
@@ -156,44 +164,17 @@ def secretsanta_logged_in():
             items_list=ITEMS_LIST
         )
 
-@app.route('/home')
-def home():
-    if "user" in session:
-        return render_template('home.html', user=session["user"])
-    else:
-        flash("Please log in to access the Home Page.", "error")
-        return redirect(url_for('login'))
-
-@app.route('/logout')
-def logout():
-    session.pop("user", None)
-    flash("You have been logged out.", "success")
-    return redirect(url_for('index'))
+# Volunteer Page
 
 @app.route('/volunteer')
 def volunteer():
     return render_template('volunteer.html', images=image_filenames)
 
+# Leaderboard Page
+
 @app.route("/leaderboard")
 def leaderboard():
     return render_template("leaderboard.html")
-
-@app.route('/add-to-events', methods=['POST'])
-def add_to_events():
-    if "user" in session:  # Check if the user is logged in
-        data = request.json
-        event = data.get('event')
-        username = session["user"]  # Logged-in user's name (not email)
-
-        # Add event to the user's document using 'name'
-        db.Users.update_one(
-            {"name": username},  # Match using the 'name' field
-            {"$addToSet": {"events": event}}  # Add event, prevent duplicates
-        )
-
-        return jsonify({"success": True, "message": "Event added successfully!"})
-    else:
-        return jsonify({"success": False, "message": "User not logged in"}), 401
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
