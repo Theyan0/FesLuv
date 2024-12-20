@@ -15,6 +15,8 @@ WHAT IT DOES:
 HOW WE BUILT IT:
 1. DESIGN:
    - User-friendly interface designed using Figma.
+   - Check out the design here: 
+     https://www.figma.com/design/YUuy0EURcDMuVFlhiMNpWA/Hackathon-Website?node-id=0-1&t=bDSH9vmKsYT1CWTe-1
    
 2. DEVELOPMENT:
    - HTML and CSS for the frontend.
